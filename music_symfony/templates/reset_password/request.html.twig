@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Reset Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css" />
+</head>
+<body class="bg-gray-100">
+    <div class="flex justify-center items-center min-h-screen bg-gray-100">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h1 class="text-2xl font-semibold text-center mb-6">Réinitialisez votre mot de passe</h1>
+
+            {% for flash_error in app.flashes('reset_password_error') %}
+                <div class="alert alert-danger text-red-500 mb-4">
+                    {{ flash_error }}
+                </div>
+            {% endfor %}
+
+            {{ form_start(requestForm) }}
+            
+            <div class="mb-4">
+                {{ form_label(requestForm.email, 'Adresse email', {'attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+                {{ form_widget(requestForm.email, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500', 'placeholder': 'Entrez votre adresse email'}}) }}
+                {{ form_errors(requestForm.email) }}
+            </div>
+
+            <div class="form-group mb-6">
+                <small class="text-sm text-gray-500">
+                    Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+                </small>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Envoyer l'email de réinitialisation</button>
+            </div>
+
+            {{ form_end(requestForm) }}
+        </div>
+    </div>
+</body>

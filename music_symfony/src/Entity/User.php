@@ -7,10 +7,12 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User implements PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,7 +37,7 @@ class User implements PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, comment>
      */
-    #[ORM\OneToMany(targetEntity: comment::class, mappedBy: 'commentor')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'commentor')]
     private Collection $comments;
 
     public function __construct()
@@ -96,11 +98,6 @@ class User implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRoles(): array
-    {
-        return $this->roles;
-    }
-
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -109,14 +106,14 @@ class User implements PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, comment>
+     * @return Collection<int, Comment>
      */
     public function getComments(): Collection
     {
         return $this->comments;
     }
 
-    public function addComment(comment $comment): static
+    public function addComment(Comment $comment): static
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
@@ -126,7 +123,7 @@ class User implements PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeComment(comment $comment): static
+    public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
@@ -136,5 +133,27 @@ class User implements PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        // Symfony utilise cette méthode pour identifier l'utilisateur
+        return $this->email;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // Méthode utilisée pour nettoyer des données sensibles après authentification (si nécessaire)
+    }
+
+    public function getRoles(): array
+    {
+        // Ajout d'un rôle par défaut si aucun n'est défini
+        $roles = $this->roles;
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
     }
 }
