@@ -94,7 +94,7 @@ class Song
         return $this->releaseDate;
     }
 
-    public function setReleaseDate(string $releaseDate): static
+    public function setReleaseDate(\DateTime $releaseDate): static
     {
         $this->releaseDate = $releaseDate;
 
