@@ -89,7 +89,7 @@ class Song
         return $this;
     }
 
-    public function getReleaseDate(): ?string
+    public function getReleaseDate(): ?\DateTime
     {
         return $this->releaseDate;
     }

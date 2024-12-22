@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-lg mt-8">
+        <h1 class="text-3xl font-semibold text-center text-gray-800 mb-8">Gestion des utilisateurs</h1>
+
+        <!-- Table des utilisateurs -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr class="bg-blue-500 text-white text-left">
+                        <th class="px-6 py-3">ID</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Nom</th>
+                        <th class="px-6 py-3">Prénom</th>
+                        <th class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr class="border-b hover:bg-gray-100">
+                            <td class="px-6 py-4">{{ user.id }}</td>
+                            <td class="px-6 py-4">{{ user.email }}</td>
+                            <td class="px-6 py-4">{{ user.lastName }}</td>
+                            <td class="px-6 py-4">{{ user.firstName }}</td>
+                            <td class="px-6 py-4">
+                                <a href="{{ path('admin_edit_user', { id: user.id }) }}" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">Éditer</a>
+                                
+                                <form action="{{ path('admin_user_delete', { id: user.id }) }}" method="post" style="display:inline;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4">Aucun utilisateur trouvé.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        
+    </div>
+{% endblock %}

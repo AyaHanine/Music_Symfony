@@ -1,0 +1,16 @@
+{{ form_start(form, {'attr': {'class': 'bg-gray-50 shadow-md rounded-lg p-6 max-w-lg mx-auto'}}) }}
+    <div class="mb-4">
+        {{ form_label(form.content, 'Contenu du commentaire', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+        <div class="mt-1">
+            {{ form_widget(form.content, {
+                'attr': {'class': 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="flex justify-end">
+        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            {{ button_label|default('Sauvegarder') }}
+        </button>
+    </div>
+{{ form_end(form) }}

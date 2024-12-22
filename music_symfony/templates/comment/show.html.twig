@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment{% endblock %}
+
+{% block body %}
+     <h1>Commentaires pour {{ song.title }}</h1>
+
+    <a href="{{ path('app_comment_new', { songId: song.id }) }}" class="btn btn-primary mb-4">Ajouter un commentaire</a>
+
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>{{ comment.content }}</p>
+                <a href="{{ path('edit_comment', { id: comment.id }) }}" class="btn btn-warning">Modifier</a>
+                <form action="{{ path('delete_comment', { id: comment.id }) }}" method="post" style="display:inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </li>
+        {% else %}
+            <p>Aucun commentaire pour cette chanson.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

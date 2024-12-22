@@ -1,9 +1,7 @@
 security:
-  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
   password_hashers:
     App\Entity\User:
       algorithm: auto
-  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
   providers:
     app_user_provider:
       entity:
@@ -15,23 +13,18 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
-      lazy: true
-      provider: app_user_provider
       form_login:
-        login_path: login
-        check_path: login
+        login_path: app_login
+        check_path: app_login
+        username_parameter: email
+        password_parameter: password
+        default_target_path: app_redirect_after_login
+        enable_csrf: true
+        provider: app_user_provider
       logout:
-        path: logout
+        path: logout_page
         target: /
 
-      # activate different ways to authenticate
-      # https://symfony.com/doc/current/security.html#the-firewall
-
-      # https://symfony.com/doc/current/security/impersonating_user.html
-      # switch_user: true
-
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }

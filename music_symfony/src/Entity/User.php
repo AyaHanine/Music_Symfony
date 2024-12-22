@@ -40,9 +40,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'commentor')]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, Playlist>
+     */
+    #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'user')]
+    private Collection $playlists;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->playlists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,7 +133,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getCommentor() === $this) {
                 $comment->setCommentor(null);
             }
@@ -137,23 +143,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        // Symfony utilise cette méthode pour identifier l'utilisateur
         return $this->email;
     }
 
     public function eraseCredentials(): void
     {
-        // Méthode utilisée pour nettoyer des données sensibles après authentification (si nécessaire)
     }
 
     public function getRoles(): array
     {
-        // Ajout d'un rôle par défaut si aucun n'est défini
         $roles = $this->roles;
         if (empty($roles)) {
             $roles[] = 'ROLE_USER';
         }
 
         return array_unique($roles);
+    }
+
+    /**
+     * @return Collection<int, Playlist>
+     */
+    public function getPlaylists(): Collection
+    {
+        return $this->playlists;
+    }
+
+    public function addPlaylist(Playlist $playlist): static
+    {
+        if (!$this->playlists->contains($playlist)) {
+            $this->playlists->add($playlist);
+            $playlist->setUserID($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlaylist(Playlist $playlist): static
+    {
+        if ($this->playlists->removeElement($playlist)) {
+            // set the owning side to null (unless already changed)
+            if ($playlist->getUserID() === $this) {
+                $playlist->setUserID(null);
+            }
+        }
+
+        return $this;
     }
 }

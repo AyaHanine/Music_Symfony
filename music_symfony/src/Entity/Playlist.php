@@ -6,6 +6,7 @@ use App\Repository\PlaylistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 class Playlist
@@ -29,6 +30,10 @@ class Playlist
      */
     #[ORM\ManyToMany(targetEntity: song::class, inversedBy: 'playlists')]
     private Collection $songs;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -96,6 +101,18 @@ class Playlist
     public function removeSong(song $song): static
     {
         $this->songs->removeElement($song);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $userID): static
+    {
+        $this->userID = $userID;
 
         return $this;
     }

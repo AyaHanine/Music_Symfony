@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css" />
+</head>
+<body class="bg-gray-100">
+    <div class="flex justify-center items-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <h1 class="text-2xl font-semibold text-center mb-6">Edit the user : {{ user.lastName }} {{ user.firstName }}</h1>
+
+            {{ form_start(form) }}
+
+                <div class="mb-6">
+                    {{ form_row(form.firstName, {'attr': {'class': 'block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                </div>
+
+                <div class="mb-6">
+                    {{ form_row(form.lastName, {'attr': {'class': 'block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                </div>
+
+                <div class="mb-6">
+                    {{ form_row(form.email, {'attr': {'class': 'block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                </div>
+
+                <div class="mb-6" style="{{ hide_password ? 'display: none;' : '' }}">
+                    {{ form_row(form.password, {'attr': {'class': 'block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
+                </div>
+
+                <div class="mb-6">
+                    <div class="space-y-4">
+                        <label> Change roles </label>
+                            {% for choice in form.roles %}
+                                <div class="mb-3">
+                                    {{ form_widget(choice, {
+                                        'attr': {
+                                            'class': 'mr-2 leading-tight'
+                                        }
+                                    }) }}
+                                    <label for="{{ choice.vars.id }}" class="text-gray-700">{{ choice.vars.value }}</label>
+                                </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            
+                <div class="flex justify-end mt-8">
+                    <button class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Sauvegarder
+                    </button>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+</body>

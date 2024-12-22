@@ -1,33 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.2/tailwind.min.css" />
 </head>
-<body class="bg-gray-100">
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
-            <h1 class="text-2xl font-semibold text-center mb-6">Se connecter</h1>
 
-            <form action="{{ path('login_page') }}" method="post">
-                <div class="mb-4">
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-500">
+
+    <!-- Container -->
+    <div class="flex justify-center items-center min-h-screen px-4">
+
+        <!-- Form Box -->
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full sm:w-96">
+
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Se connecter</h1>
+
+            <form method="post">
+
+                <!-- Error Message -->
+                {% if error %}
+                    <div class="bg-red-100 text-red-600 p-4 mb-4 rounded-md">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <!-- Email -->
+                <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
-                    <input type="email" name="email" id="email" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                    <input type="email" name="email" id="email"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        required placeholder="Entrez votre adresse email">
                 </div>
 
+                <!-- Password -->
                 <div class="mb-6">
                     <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-                    <input type="password" name="password" id="password" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 visibility:" required >
+                    <input type="password" name="password" id="password"
+                        class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        required placeholder="Entrez votre mot de passe">
                 </div>
 
+                <!-- CSRF Token -->
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                <!-- Buttons and Links -->
                 <div class="flex items-center justify-between">
-                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md shadow-md hover:bg-indigo-700">Se connecter</button>
-                    <a href="{{ path('reset_password') }}" class="text-sm text-indigo-600 hover:text-indigo-700">Mot de passe oublié ?</a>
+                    <button type="submit"
+                        class="bg-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105">
+                        Se connecter
+                    </button>
+                    <a href="{{ path('reset_password') }}"
+                        class="text-sm text-indigo-600 hover:text-indigo-700 transition duration-300">Mot de passe oublié ?</a>
                 </div>
+
             </form>
         </div>
     </div>
+
 </body>
+
 </html>

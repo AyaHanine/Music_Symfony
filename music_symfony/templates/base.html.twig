@@ -1,16 +1,71 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body class="bg-gray-100">
-        {% block body %}{% endblock %}
-    </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Mon site de musique{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %} 
+</head>
+<body class="flex flex-col min-h-screen ">
+    <header class="bg-black text-white p-4 shadow-md">
+
+        <div class="container mx-auto flex justify-between items-center">
+            <a  class="text-2xl font-bold">MyMusic</a> 
+
+            <nav>
+                <ul class="flex space-x-6">
+                    <li>
+                    {% if is_granted('ROLE_USER')%}
+                    <a  href="{{ path('user_home') }}"class="hover:text-green-500">Accueil</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN')%}
+                    <a  href="{{ path('admin_home') }}"class="hover:text-green-500">Accueil</a></li>
+                    {% endif %}
+                    <li><a  href="{{ path('app_playlist_index') }}" class="hover:text-green-500">Playlists</a></li>
+                    {% if is_granted('ROLE_ADMIN')%}
+                    <li><a href="{{ path('user_list_page') }}" class="hover:text-green-500">Utilisateurs</a></li>
+                    {% endif %}
+                    <li><a href="{{ path('app_song_index') }}"class="hover:text-green-500">Chansons</a></li>
+                    {% if app.user  %}
+                        <li><a href="{{'myProfile'}}"class="hover:text-green-500">Profil</a></li>
+                        <li><a  href="{{ path('logout_page') }}"class="hover:text-green-500">Déconnexion</a></li>
+                    {% else %}
+                        <li><a  href="{{ path('app_login') }}" class="hover:text-green-500">Connexion</a></li>
+                        <li><a  href="{{ path('app_register') }}" class="hover:text-green-500">S'inscrire</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+                    
+
+    </div>
+    </header>
+
+<main class="flex-grow items-center justify-center">
+        {% block body %}{% endblock %} 
+    </main>
+
+    <footer class="bg-black text-white p-4 mt-8">
+        <div class="container mx-auto text-center">
+            <p>&copy; {{ "now"|date("Y") }} MyMusic - Tous droits réservés</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    {% block javascripts %}
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script> 
+        <script src="{{ asset('js/app.js') }}"></script>
+    {% endblock %}
+</body>
 </html>
