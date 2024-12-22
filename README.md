@@ -30,3 +30,18 @@ Copier le code
 composer install
 ```
 Cela téléchargera et installera toutes les bibliothèques nécessaires à Symfony et à ton projet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
