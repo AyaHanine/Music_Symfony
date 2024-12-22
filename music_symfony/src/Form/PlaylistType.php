@@ -18,16 +18,14 @@ class PlaylistType extends AbstractType
             $builder->add('existing_playlist', EntityType::class, [
                 'class' => Playlist::class,
                 'choices' => $options['playlists'],
-                'choice_label' => 'name', // Afficher le nom de la playlist
+                'choice_label' => 'name',
                 'placeholder' => 'Choisir une playlist existante',
-                'required' => false, // Ne pas obliger la sélection
+                'required' => false,
             ]);
         }
 
-        // Champ pour le nom de la nouvelle playlist
         $builder->add('name');
 
-        // Champ pour ajouter des chansons à la playlist
         $builder->add('songs', EntityType::class, [
             'class' => Song::class,
             'choice_label' => 'title',

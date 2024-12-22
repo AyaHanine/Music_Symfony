@@ -10,7 +10,6 @@
 
 <body class="bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600">
 
-    <!-- Container -->
     <div class="flex justify-center items-center min-h-screen px-4">
         <div class="bg-white p-8 rounded-lg shadow-xl w-full sm:w-96">
             
@@ -18,43 +17,36 @@
 
             {{ form_start(form) }}
             
-            <!-- Prénom -->
             <div class="mb-6">
                 <label for="firstName" class="block text-sm font-medium text-gray-700">Prénom</label>
                 {{ form_widget(form.firstName, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500', 'placeholder': 'Entrez votre prénom'}}) }}
                 {{ form_errors(form.firstName) }}
             </div>
 
-            <!-- Nom -->
             <div class="mb-6">
                 <label for="lastName" class="block text-sm font-medium text-gray-700">Nom</label>
                 {{ form_widget(form.lastName, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500', 'placeholder': 'Entrez votre nom'}}) }}
                 {{ form_errors(form.lastName) }}
             </div>
 
-            <!-- Roles (si visible) -->
             <div class="mb-6" style="{{ hide_roles ? 'display: none;' : '' }}">
                 {{ form_row(form.roles, {'attr': {'class': 'block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500'}}) }}
             </div>
 
-            <!-- Email -->
             <div class="mb-6">
                 <label for="email" class="block text-sm font-medium text-gray-700">Adresse email</label>
                 {{ form_widget(form.email, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500', 'placeholder': 'Entrez votre adresse email'}}) }}
                 {{ form_errors(form.email) }}
             </div>
 
-            <!-- Mot de passe -->
             <div class="mb-6">
                 <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
                 {{ form_widget(form.password, {'attr': {'class': 'mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500', 'placeholder': 'Entrez votre mot de passe'}}) }}
                 {{ form_errors(form.password) }}
             </div>
 
-            <!-- Bouton d'inscription -->
             <button type="submit" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-indigo-700 transform transition duration-300 hover:scale-105 mb-4">S'inscrire</button>
 
-            <!-- Lien vers la page de connexion -->
             <div class="text-center">
                 <a href="{{ path('app_login') }}" class="text-sm text-indigo-600 hover:text-indigo-700">Déjà inscrit ?</a>
             </div>

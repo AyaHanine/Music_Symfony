@@ -5,12 +5,10 @@
 {% block body %}
     <div class="container mx-auto px-4 py-8">
     <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-        <!-- Bannière et titre -->
         <div class="bg-gradient-to-r from-purple-500 via-blue-500 to-green-500 h-32 flex items-center justify-center">
             <h1 class="text-4xl text-white font-bold">{{ song.title }}</h1>
         </div>
         
-        <!-- Détails de la chanson -->
         <div class="p-6 bg-blue-50 rounded-b-lg">
             <p class="text-gray-600"><span class="font-semibold">Artiste :</span> {{ song.artist }}</p>
             <p class="text-gray-600"><span class="font-semibold">Album :</span> {{ song.album }}</p>
@@ -18,11 +16,9 @@
         </div>
     </div>
 
-    <!-- Section des commentaires -->
     <div class="mt-8">
         <h2 class="text-2xl font-bold mb-4">Commentaires</h2>
 
-        <!-- Liste des commentaires -->
         <div class="space-y-4">
             {% for comment in comments %}
                 <div class="bg-gray-100 shadow-md rounded-lg p-4">
@@ -35,7 +31,6 @@
                                 Modifier
                             </a>
 
-                            <!-- Supprimer le commentaire -->
                             <form action="{{ path('app_comment_delete', {'id': comment.id}) }}" method="POST" style="display:inline;">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">

@@ -161,7 +161,6 @@ class Song
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
             if ($comment->getSong() === $this) {
                 $comment->setSong(null);
             }

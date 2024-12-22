@@ -26,17 +26,13 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encoder le mot de passe
             $user->setPassword($passwordhashed->hashPassword($user, $user->getPassword()));
 
-            // Définir un rôle par défaut (par exemple, ROLE_USER)
             $user->setRoles(['ROLE_USER']);
 
-            // Sauvegarder l'utilisateur dans la base de données
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Rediriger l'utilisateur vers une page de confirmation ou la page d'accueil
             return $this->redirectToRoute('app_redirect_after_login');
         }
 

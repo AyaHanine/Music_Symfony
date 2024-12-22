@@ -35,7 +35,7 @@ final class CommentController extends AbstractController
 
         $now = new \DateTime();
         $comment->setCreatedAt($now);
-        $user = $this->getUser();  // Utilisation de la méthode getUser() héritée de AbstractController
+        $user = $this->getUser();
 
         if ($user) {
             $comment->setCommentor($user);

@@ -64,13 +64,13 @@ class AppFixtures extends Fixture
         // Générer 10 chansons fictives
         for ($i = 0; $i < 10; $i++) {
             $song[$i] = new Song();
-            $song[$i]->setTitle($faker->sentence)  // Titre de la chanson (une phrase de 3 mots)
-                ->setArtist($faker->name)  // Artiste
-                ->setAlbum($faker->word)  // Album (génère un mot)
-                ->setReleaseDate($faker->dateTimeThisCentury)  // Date de sortie (cette année)
-                ->setGenre($faker->word);  // Genre (un mot)
+            $song[$i]->setTitle($faker->sentence)
+                ->setArtist($faker->name)
+                ->setAlbum($faker->word)
+                ->setReleaseDate($faker->dateTimeThisCentury)
+                ->setGenre($faker->word);
             $this->addReference('song_' . $i, $song[$i]);
-            // Persister l'entité pour l'ajouter à la base de données
+
             $manager->persist($song[$i]);
         }
 
@@ -82,7 +82,7 @@ class AppFixtures extends Fixture
             $playlist[$i]->setName($faker->word())
                 ->setCreatedAt($faker->dateTimeBetween('-1 year', 'now'))
                 ->setUpdatedAt($faker->dateTimeBetween($playlist[$i]->getCreatedAt(), 'now'));
-            $this->addReference('playlist_' . $i, $playlist[$i]); // Ajouter une référence pour chaque playlist
+            $this->addReference('playlist_' . $i, $playlist[$i]);
 
 
             // Ajouter 5 chansons à chaque playlist
@@ -111,11 +111,9 @@ class AppFixtures extends Fixture
         // Crée 10 commentaires fictifs
         for ($i = 0; $i < 10; $i++) {
             $comment = new Comment();
-            $comment->setContent($faker->word); // Contenu du commentaire
-            $comment->setCreatedAt($faker->dateTimeThisYear()); // Date de création aléatoire
-            $comment->setCommentor($this->getReference('user_admin', User::class)); // Utilisateur aléatoire (assure-toi d'avoir des utilisateurs déjà créés dans une autre fixture)
-
-            // Associe un morceau de musique aléatoire
+            $comment->setContent($faker->word);
+            $comment->setCreatedAt($faker->dateTimeThisYear());
+            $comment->setCommentor($this->getReference('user_admin', User::class));
 
             $manager->persist($comment);
         }
