@@ -20,6 +20,7 @@ Commence par cloner le dépôt dans ton répertoire de travail :
 ```bash
 git clone https://github.com/ton-utilisateur/ton-repository.git
 cd ton-repository
+```
 
 ### 2. Installer les dépendances
 Utilise Composer pour installer toutes les dépendances du projet :
@@ -27,4 +28,5 @@ Utilise Composer pour installer toutes les dépendances du projet :
 ```bash
 Copier le code
 composer install
+```
 Cela téléchargera et installera toutes les bibliothèques nécessaires à Symfony et à ton projet.
